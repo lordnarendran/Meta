@@ -1,0 +1,18 @@
+#First step is to download the dataset from the following roboflow workspace
+
+from roboflow import Roboflow
+rf = Roboflow(api_key="VY7DPmD1dnKIVjdzSLNA")
+project = rf.workspace("palm-fruit-aqjvq").project("palm-n5dky")
+version = project.version(1)
+dataset = version.download("yolov8")
+
+
+#Second step is to train the downloaded dataset, preferrably more than 200 times for more accurate results and set patience to 0 as the training will stop automatically if the model dosent detect any more changes
+from ultralytics import YOLO
+
+# Load the YOLOv8 model
+model = YOLO('yolov8n.pt')
+
+# Train the model using GPU (device='0' or 'cuda')
+model.train(data='C://Users//naren//Llama//Palm-1//data.yaml', epochs=200, patience=0, imgsz=640, batch=16, device='0')
+
